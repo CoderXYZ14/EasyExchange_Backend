@@ -1,7 +1,14 @@
+// backend/db.js
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/paytm");
+mongoose
+  .connect(
+    "mongodb+srv://shahwaizislam1404:InGBZNZmpkAvE3JP@cluster0.6reay3w.mongodb.net/"
+  )
+  .then((db) => console.log("DB is connected"))
+  .catch((err) => console.log(err));
 
+// Create a Schema for Users
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -30,5 +37,23 @@ const userSchema = new mongoose.Schema({
     maxLength: 50,
   },
 });
+
+const accountSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId, // Reference to User model
+    ref: "User",
+    required: true,
+  },
+  balance: {
+    type: Number,
+    required: true,
+  },
+});
+
+const Account = mongoose.model("Account", accountSchema);
 const User = mongoose.model("User", userSchema);
-module.exports = { User };
+
+module.exports = {
+  User,
+  Account,
+};

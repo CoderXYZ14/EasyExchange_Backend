@@ -1,14 +1,13 @@
+// backend/index.js
 const express = require("express");
-const mainRouter = require("./routes/index");
+const cors = require("cors");
+const rootRouter = require("./routes/index");
 
 const app = express();
-const cors = require("cors");
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/v1", mainRouter);
+app.use("/api/v1", rootRouter);
 
-//as rouets would look like
-// /api/v1/users/signin
 app.listen(3000);
